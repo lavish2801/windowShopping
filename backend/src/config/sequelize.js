@@ -1,16 +1,14 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
+const config = require('./config.json');
+
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = config[env];
 
 const sequelize = new Sequelize(process.env.SUPABASE_DATABASE_URL, {
-  dialect: 'postgres',
-  protocol: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
-  logging: false // Set to true for debugging
+  dialect: dbConfig.dialect,
+  protocol: dbConfig.protocol,
+  dialectOptions: dbConfig.dialectOptions,
+  logging: dbConfig.logging
 });
 
 // Test the connection
