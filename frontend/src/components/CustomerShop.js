@@ -98,7 +98,7 @@ const CustomerShop = () => {
 
   const filteredProducts = products.filter(product => {
     const categoryMatch = !selectedCategory || product.category === selectedCategory;
-    const sizeMatch = !selectedSize || product.size === selectedSize;
+    const sizeMatch = !selectedSize || product.size.includes(selectedSize);
     return categoryMatch && sizeMatch;
   });
 
@@ -132,12 +132,12 @@ const CustomerShop = () => {
                     <h3>{product.name}</h3>
                     <p>Category: {product.category}</p>
                   </div>
-                  <button
+                  {/* <button
                     className="remove-from-wishlist"
                     onClick={(event) => handleWishlistClick(event, product._id)}
                   >
                     Remove
-                  </button>
+                  </button> */}
                 </div>
               ))
             ) : (
@@ -206,8 +206,34 @@ const CustomerShop = () => {
           <h3>{product.name}</h3>
           <p className="category">{product.category}</p>
           <div className="product-details">
-            <span>Color: {product.color}</span>
-            <span>Size: {product.size}</span>
+            <div className="detail-item">
+              <span className="label">Colors:</span>
+              <div className="color-chips">
+                {product.color && product.color.length > 0 ? (
+                  product.color.map((color, index) => (
+                    <span key={index} className="color-chip">
+                      {color}
+                    </span>
+                  ))
+                ) : (
+                  <span className="no-data">No colors</span>
+                )}
+              </div>
+            </div>
+            <div className="detail-item">
+              <span className="label">Sizes:</span>
+              <div className="size-chips">
+                {product.size && product.size.length > 0 ? (
+                  product.size.map((size, index) => (
+                    <span key={index} className="size-chip">
+                      {size}
+                    </span>
+                  ))
+                ) : (
+                  <span className="no-data">No sizes</span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

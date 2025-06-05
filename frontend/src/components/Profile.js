@@ -25,7 +25,9 @@ const Profile = () => {
 
   const copyToClipboard = () => {
     if (shopDetails?.customerUrl) {
-      navigator.clipboard.writeText(shopDetails.customerUrl);
+      const shopName = shopDetails.customerUrl.split('/').pop();
+      const frontendUrl = `${window.location.origin}/shop/${shopName}`;
+      navigator.clipboard.writeText(frontendUrl);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     }
@@ -70,7 +72,7 @@ const Profile = () => {
           <h2>Customer URL</h2>
           <div className="customer-url-container">
             <div className="url-display">
-              <span>{`${shopDetails.customerUrl}`}</span>
+              <span>{`${window.location.origin}/shop/${shopDetails.customerUrl.split('/').pop()}`}</span>
             </div>
             <button 
               className={`copy-button ${isCopied ? 'copied' : ''}`}

@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const sequelize = require('./config/sequelize');
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +21,12 @@ async function main() {
     .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/windowshop")
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
+
+  // Initialize Sequelize models
+  const ProductImage = require('./models/ProductImage');
+  await sequelize.sync()
+    .then(() => console.log('Sequelize models synchronized'))
+    .catch(err => console.error('Error synchronizing Sequelize models:', err));
 
   // Routes (to be added)
   app.use("/ping", (req, res) => {

@@ -118,8 +118,8 @@ const ProductList = () => {
               <div className="product-details">
                 <h3>{product.name}</h3>
                 <p><strong>Category:</strong> {product.category}</p>
-                <p><strong>Color:</strong> {product.color}</p>
-                <p><strong>Size:</strong> {product.size}</p>
+                <p><strong>Color:</strong> {product.color ? product.color.join(', ') : 'N/A'}</p>
+                <p><strong>Size:</strong> {product.size ? product.size.join(', ') : 'N/A'}</p>
                 <p><strong>Quantity:</strong> {product.quantity}</p>
                 <p><strong>Price Code:</strong> {product.priceCode}</p>
                 <p>

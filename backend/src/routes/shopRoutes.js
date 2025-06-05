@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ShopController = require("../controllers/ShopController");
+const ShopController = require("../controllers/shopController");
 
 // Route to get all shops
 router.post("/login", ShopController.login);

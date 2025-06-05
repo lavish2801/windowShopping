@@ -8,12 +8,14 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     category: "",
     name: "",
-    color: "",
-    size: "",
+    color: [],
+    size: [],
     quantity: 1,
     priceCode: "",
     availability: true,
     images: [],
+    newCategory: false,
+    newSize: false,
   });
   const [categories, setCategories] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -116,8 +118,20 @@ const AddProduct = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (name === "category" && value === "new") {
+    
+    if (name === "size" || name === "color") {
+      const options = e.target.options;
+      const selectedValues = [];
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+          selectedValues.push(options[i].value);
+        }
+      }
+      setFormData((prev) => ({
+        ...prev,
+        [name]: selectedValues,
+      }));
+    } else if (name === "category" && value === "new") {
       setFormData((prev) => ({ ...prev, [name]: "", newCategory: true }));
     } else if (name === "size" && value === "new") {
       setFormData((prev) => ({ ...prev, [name]: "", newSize: true }));
@@ -129,6 +143,24 @@ const AddProduct = () => {
         newSize: name === "size" ? false : prev.newSize,
       }));
     }
+  };
+
+  const handleColorClick = (color) => {
+    setFormData(prev => {
+      const colors = prev.color.includes(color)
+        ? prev.color.filter(c => c !== color)
+        : [...prev.color, color];
+      return { ...prev, color: colors };
+    });
+  };
+
+  const handleSizeClick = (size) => {
+    setFormData(prev => {
+      const sizes = prev.size.includes(size)
+        ? prev.size.filter(s => s !== size)
+        : [...prev.size, size];
+      return { ...prev, size: sizes };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -292,41 +324,44 @@ const AddProduct = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="color">Color:</label>
-          <input
-            type="text"
-            id="color"
-            name="color"
-            value={formData.color}
-            onChange={handleChange}
-            required
-          />
+          <label>Colors:</label>
+          <div className="color-blocks">
+            {["Red", "Blue", "Green", "Black", "White", "Yellow", "Purple", "Pink", "Orange", "Brown", "Gray"].map((color) => (
+              <div
+                key={color}
+                className={`color-block ${formData.color.includes(color) ? 'selected' : ''}`}
+                style={{ backgroundColor: color.toLowerCase() }}
+                onClick={() => handleColorClick(color)}
+              >
+                {color}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="size">Size:</label>
-          <select
-            id="size"
-            name="size"
-            value={formData.newSize ? "new" : formData.size}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a size</option>
-            {sizes.map((size, index) => (
-              <option key={index} value={size}>
+          <label>Sizes:</label>
+          <div className="size-blocks">
+            {sizes.map((size) => (
+              <div
+                key={size}
+                className={`size-block ${formData.size.includes(size) ? 'selected' : ''}`}
+                onClick={() => handleSizeClick(size)}
+              >
                 {size}
-              </option>
+              </div>
             ))}
-            <option value="new">+ Add New Size</option>
-          </select>
+          </div>
           {formData.newSize && (
             <input
               type="text"
               placeholder="Enter new size"
-              value={formData.size}
+              value={formData.size[formData.size.length - 1] || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, size: e.target.value }))
+                setFormData((prev) => ({
+                  ...prev,
+                  size: [...prev.size.slice(0, -1), e.target.value],
+                }))
               }
               className="new-input"
               required

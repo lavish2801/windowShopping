@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CustomerController = require("../controllers/CustomerController");
+const CustomerController = require("../controllers/customerController");
 
 // Get customer by mobile number and PIN every time new
 router.get("/:shopId/login", CustomerController.login);

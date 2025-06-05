@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const AdminController = require('../controllers/AdminController');
+const AdminController = require('../controllers/adminController');
 
 router.post('/addShop', AdminController.addShop);
 router.post('/:shopId/add/product-category', AdminController.addProductCategory);
