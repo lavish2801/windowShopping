@@ -52,7 +52,7 @@ const shopSchema = new mongoose.Schema({
   },
   customerUrl: {
     type: String,
-    required: true,
+    required: false,
     unique: true
   },
   products: [{

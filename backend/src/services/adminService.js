@@ -5,7 +5,7 @@ const AdminService = {
     try {
       const { name, type, address, phone, email, pin } = data;
       const urlShopName = name.toLowerCase().replace(/ /g, '-');
-      const customerUrl = `https://windowshop.com/shop/${urlShopName}`; // Replace with your actual URL logic
+      const customerUrl = `/shop/${urlShopName}`;
       const shop = new Shop({ name: name.toUpperCase(), type: type.toUpperCase(), address: address.toUpperCase(), phone, email: email.toLowerCase(), pin, customerUrl });
       await shop.save();
       return shop;
@@ -69,6 +69,14 @@ const AdminService = {
       shop.sizes.push(...newSizes);
       await shop.save();
       return { message: "Sizes added successfully", sizes };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  getAllShops: async () => {
+    try {
+      const shops = await Shop.find();
+      return shops;
     } catch (error) {
       throw new Error(error.message);
     }

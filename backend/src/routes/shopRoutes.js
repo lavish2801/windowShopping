@@ -10,5 +10,5 @@ router.delete("/delete-product", ShopController.deleteProduct);
 router.get("/get-product/:productId", ShopController.getProductById);
 router.get("/:shopId/get-products", ShopController.getAllProducts);
 router.get("/:shopId/get-shop-details", ShopController.getShopById);
-
+router.get("/:shopUrl/customer-view", ShopController.getShopForCustomer);
 module.exports = router;
