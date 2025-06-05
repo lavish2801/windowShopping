@@ -4,11 +4,11 @@ const AdmminService = require("../services/adminService");
 const ShopController = {
   login: async (req, res) => {
     //name from url and pin in body
-    const response = AdmminService.loginVerify(req.body);
+    const response = await AdmminService.loginVerify(req.body);
     if (response.error) {
       return res.status(400).json({ error: response.error });
     }
-    res.status(200).json({ message: "Welcome to the WindowShop API" });
+    res.status(200).json(response);
   },
   addProducts: async (req, res) => {
     try {
@@ -64,6 +64,18 @@ const ShopController = {
       const response = await ShopService.getShopById(shopId);
       if (!response) {
         return res.status(404).json({ error: "Shop not found" });
+      }
+      res.status(200).json(response);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  getShopForCustomer: async (req, res) => {
+    try {
+      const { shopUrl } = req.params;
+      const response = await ShopService.getShopForCustomer(shopUrl);
+      if (!response) {
+        return res.status(404).json({ error: "Shop not found or is currently unavailable" });
       }
       res.status(200).json(response);
     } catch (error) {

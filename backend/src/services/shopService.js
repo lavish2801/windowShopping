@@ -22,6 +22,7 @@ const ShopService = {
           quantity: product.quantity,
           priceCode: product.priceCode,
           availability: product.availability,
+          images: product.images || [],
           shopId: shop._id, // Associate product with shop
         });
       });
@@ -122,6 +123,39 @@ const ShopService = {
     }
     return shop;
   },
+  getShopForCustomer: async (shopUrl) => {
+    const shop = await Shop.findOne({ customerUrl: `/shop/${shopUrl}` });
+    if (!shop) {
+      throw new Error("Shop not found");
+    }
+    const products = await Product.find({ shopId: shop._id });
+    if (!products || products.length === 0) {
+      throw new Error("No products found for this shop");
+    }
+    return {
+      shop: {
+        id: shop._id,
+        name: shop.name,
+        email: shop.email,
+        phone: shop.phone,
+        customerUrl: shop.customerUrl,
+        categories: shop.categories || [],
+        address: shop.address,
+        sizes: shop.sizes || [],
+      },
+      products: products.map((product) => ({
+        id: product._id,
+        category: product.category,
+        name: product.name,
+        color: product.color,
+        size: product.size,
+        quantity: product.quantity,
+        priceCode: product.priceCode,
+        availability: product.availability,
+        images: product.images || [],
+      })),
+    };
+  }
 };
 
 module.exports = ShopService;

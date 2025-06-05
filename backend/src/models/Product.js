@@ -31,6 +31,11 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  images:{
+    // Array of image base64 strings
+    type: [String],
+    default: []
+  },
   shopId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',

@@ -26,6 +26,14 @@ const AdminController = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+  getAllShops: async (req, res) => {
+    try {
+      const response = await AdminService.getAllShops();
+      res.status(200).json(response);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   }
 };
 

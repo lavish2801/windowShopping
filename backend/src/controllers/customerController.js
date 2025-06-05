@@ -4,7 +4,7 @@ const CustomerController = {
   login: async (req, res) => {
     try {
       // Find customer by mobile number and create PIN
-      const customer = await CustomerService(
+      const customer = await CustomerService.login(
         req.query.mobileNumber,
         req.params.shopId
       );
