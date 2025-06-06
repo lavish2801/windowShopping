@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = `${REACT_BACKEND_URL}/.netlify/functions/api`;
 
 export const API = {
   // Shop related endpoints
