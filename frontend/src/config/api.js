@@ -1,4 +1,4 @@
-const BASE_URL = `${REACT_BACKEND_URL}/.netlify/functions/api`;
+const BASE_URL = `${process.env.REACT_APP_BACKEND_URL}/.netlify/functions/api`;
 
 export const API = {
   // Shop related endpoints
