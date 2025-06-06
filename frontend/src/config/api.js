@@ -1,7 +1,9 @@
 const BACKEND_URL =
   `${process.env.REACT_APP_BACKEND_URL}/.netlify/functions` ||
   "http://localhost:5000";
-const BASE_URL = `${BACKEND_URL}/api`;
+
+const RENDER_BACKEND_URL ='https://windowshopping-80e3.onrender.com';
+const BASE_URL = `${RENDER_BACKEND_URL}/api`;
 export const API = {
   // Shop related endpoints
   baseUrl: () => `${BASE_URL}`,
