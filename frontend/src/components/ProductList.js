@@ -9,6 +9,8 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const [deletingProductId, setDeletingProductId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,16 +47,27 @@ const ProductList = () => {
     }));
   };
 
-  // const handleDelete = async (productId) => {
-  //   if (window.confirm('Are you sure you want to delete this product?')) {
-  //     try {
-  //       await axios.delete(API.deleteProduct(productId));
-  //       fetchProducts();
-  //     } catch (err) {
-  //       setError('Error deleting product');
-  //     }
-  //   }
-  // };
+  const handleDelete = async (productId) => {
+    if (window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+      try {
+        setDeletingProductId(productId);
+        const shopId = localStorage.getItem('shopId');
+        await axios.delete(API.deleteProduct(), {
+          data: {
+            shopId,
+            productId
+          }
+        });
+        setSuccessMessage('Product deleted successfully');
+        setTimeout(() => setSuccessMessage(''), 3000);
+        fetchProducts();
+      } catch (err) {
+        setError('Error deleting product');
+      } finally {
+        setDeletingProductId(null);
+      }
+    }
+  };
 
   // const handleAvailabilityToggle = async (productId, currentAvailability) => {
   //   try {
@@ -76,6 +89,7 @@ const ProductList = () => {
       />
 
       {error && <div className="error-message">{error}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>}
 
       {products.length === 0 ? (
         <div className="no-products">No products found</div>
@@ -129,26 +143,25 @@ const ProductList = () => {
                   </span>
                 </p>
               </div>
-              {/* <div className="product-actions">
+              <div className="product-actions">
                 <button
-                  className="edit-button"
-                  onClick={() => navigate(`/edit-product/${product._id}`)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="toggle-button"
-                  onClick={() => handleAvailabilityToggle(product._id, product.availability)}
-                >
-                  {product.availability ? 'Mark Unavailable' : 'Mark Available'}
-                </button>
-                <button
-                  className="delete-button"
+                  className={`delete-button ${deletingProductId === product._id ? 'deleting' : ''}`}
                   onClick={() => handleDelete(product._id)}
+                  disabled={deletingProductId === product._id}
                 >
-                  Delete
+                  {deletingProductId === product._id ? (
+                    <>
+                      <span className="spinner"></span>
+                      Deleting...
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-trash"></i>
+                      Delete
+                    </>
+                  )}
                 </button>
-              </div> */}
+              </div>
             </div>
           ))}
         </div>

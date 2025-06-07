@@ -36,14 +36,14 @@ const AdminService = {
       }
       /** make all categories uppercase */
       category = category.map((cat) => cat.toUpperCase());
-      const existingCategories = shop.categories.map((cat) => cat.name);
-      const newCategories = category.filter(
-        (cat) => !existingCategories.includes(cat.name)
-      );
-      if (newCategories.length === 0) {
-        return { message: "Category added successfully", category };
-      }
-      shop.categories.push(...newCategories);
+      // const existingCategories = shop.categories.map((cat) => cat.name);
+      // const newCategories = category.filter(
+      //   (cat) => !existingCategories.includes(cat.name)
+      // );
+      // if (newCategories.length === 0) {
+      //   return { message: "Category added successfully", category };
+      // }
+      shop.categories.push(...category);
       await shop.save();
       return { message: "Category added successfully", category };
     } catch (error) {
@@ -53,6 +53,7 @@ const AdminService = {
   addProductSizes: async (shopId, sizes) => {
     try {
       const shop = await Shop.findById(shopId);
+
       if (!shop) {
         throw new Error("Shop not found");
       }
@@ -61,12 +62,14 @@ const AdminService = {
       }
       /** make all sizes uppercase */
       sizes = sizes.map((size) => size.toUpperCase());
-      const existingSizes = shop.sizes.map((size) => size.name);
-      const newSizes = sizes.filter((size) => !existingSizes.includes(size.name));
-      if (newSizes.length === 0) {
-        return { message: "Sizes added successfully", sizes };
-      }
-      shop.sizes.push(...newSizes);
+      // const existingSizes = shop.sizes.map((size) => size);
+      // console.log('------', existingSizes);
+      // const newSizes = sizes.filter((size) => !existingSizes.includes(size.name));
+      // console.log('------', newSizes);
+      // if (newSizes.length === 0) {
+      //   return { message: "Sizes added successfully", sizes };
+      // }
+      shop.sizes.push(...sizes);
       await shop.save();
       return { message: "Sizes added successfully", sizes };
     } catch (error) {

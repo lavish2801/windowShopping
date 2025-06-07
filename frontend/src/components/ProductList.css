@@ -211,4 +211,80 @@
   .product-image {
     height: 220px;
   }
+}
+
+.delete-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+.delete-button:disabled {
+  background-color: #ff9999;
+  cursor: not-allowed;
+}
+
+.delete-button.deleting {
+  background-color: #ff9999;
+}
+
+.delete-button i {
+  font-size: 14px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.error-message {
+  background-color: #ff4444;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.product-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  gap: 10px;
 } 

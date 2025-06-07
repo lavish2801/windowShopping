@@ -530,4 +530,74 @@
   padding: 2rem;
   color: #666;
   font-style: italic;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: auto;
+  background: transparent;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.full-size-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+.image-modal-content .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  z-index: 1001;
+}
+
+.image-modal-content .close-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.product-image {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.02);
+}
+
+.wishlist-item-image {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.wishlist-item-image:hover {
+  transform: scale(1.05);
+}
+
+.wishlist-item-image img {
+  transition: transform 0.3s ease;
+}
+
+.wishlist-item-image:hover img {
+  transform: scale(1.1);
 } 

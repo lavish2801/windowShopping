@@ -8,8 +8,8 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     category: "",
     name: "",
-    color: [],
-    size: [],
+    color: ["default"],
+    size: ["default"],
     quantity: 1,
     priceCode: "",
     availability: true,
@@ -295,9 +295,9 @@ const AddProduct = () => {
                 {category}
               </option>
             ))}
-            <option value="new">+ Add New Category</option>
+            {/* <option value="new">+ Add New Category</option> */}
           </select>
-          {formData.newCategory && (
+          {/* {formData.newCategory && (
             <input
               type="text"
               placeholder="Enter new category"
@@ -308,7 +308,7 @@ const AddProduct = () => {
               className="new-input"
               required
             />
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
@@ -324,8 +324,8 @@ const AddProduct = () => {
         </div>
 
         <div className="form-group">
-          <label>Colors:</label>
-          <div className="color-blocks">
+          {/* <label>Colors:</label> */}
+          {/* <div className="color-blocks">
             {["Red", "Blue", "Green", "Black", "White", "Yellow", "Purple", "Pink", "Orange", "Brown", "Gray"].map((color) => (
               <div
                 key={color}
@@ -336,10 +336,10 @@ const AddProduct = () => {
                 {color}
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Sizes:</label>
           <div className="size-blocks">
             {sizes.map((size) => (
@@ -367,7 +367,7 @@ const AddProduct = () => {
               required
             />
           )}
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label htmlFor="quantity">Quantity:</label>

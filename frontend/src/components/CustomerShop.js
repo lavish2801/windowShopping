@@ -15,6 +15,8 @@ const CustomerShop = () => {
   const [allProductIds, setAllProductIds] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     fetchShopDetails();
@@ -102,6 +104,17 @@ const CustomerShop = () => {
     return categoryMatch && sizeMatch;
   });
 
+  const ImageModal = ({ image, onClose }) => {
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="image-modal-content" onClick={e => e.stopPropagation()}>
+          <button className="close-button" onClick={onClose}>×</button>
+          <img src={image} alt="Full size" className="full-size-image" />
+        </div>
+      </div>
+    );
+  };
+
   const WishlistModal = () => {
     const wishlistProducts = getWishlistProducts();
 
@@ -121,7 +134,16 @@ const CustomerShop = () => {
             {wishlistProducts.length > 0 ? (
               wishlistProducts.map(product => (
                 <div key={product._id} className="wishlist-item">
-                  <div className="wishlist-item-image">
+                  <div 
+                    className="wishlist-item-image"
+                    onClick={() => {
+                      if (product.images && product.images.length > 0) {
+                        setSelectedImage(product.images[0]);
+                        setShowImageModal(true);
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
                     {product.images && product.images.length > 0 ? (
                       <img src={product.images[0]} alt={product.name} />
                     ) : (
@@ -129,15 +151,9 @@ const CustomerShop = () => {
                     )}
                   </div>
                   <div className="wishlist-item-details">
-                    <h3>{product.name}</h3>
-                    <p>Category: {product.category}</p>
+                    <h4>Category:</h4>
+                    <p> {product.category}</p>
                   </div>
-                  {/* <button
-                    className="remove-from-wishlist"
-                    onClick={(event) => handleWishlistClick(event, product._id)}
-                  >
-                    Remove
-                  </button> */}
                 </div>
               ))
             ) : (
@@ -167,6 +183,13 @@ const CustomerShop = () => {
       );
     };
 
+    const handleImageClick = () => {
+      if (product.images && product.images.length > 0) {
+        setSelectedImage(product.images[currentImageIndex]);
+        setShowImageModal(true);
+      }
+    };
+
     return (
       <div className="product-card">
         <div className="product-image-container">
@@ -176,6 +199,8 @@ const CustomerShop = () => {
                 src={product.images[currentImageIndex]} 
                 alt={product.name}
                 className="product-image"
+                onClick={handleImageClick}
+                style={{ cursor: 'pointer' }}
               />
               {product.images.length > 1 && (
                 <>
@@ -203,9 +228,9 @@ const CustomerShop = () => {
           </button>
         </div>
         <div className="product-info">
-          <h3>{product.name}</h3>
+          {/* <h3>{product.name}</h3> */}
           <p className="category">{product.category}</p>
-          <div className="product-details">
+          {/* <div className="product-details">
             <div className="detail-item">
               <span className="label">Colors:</span>
               <div className="color-chips">
@@ -234,7 +259,7 @@ const CustomerShop = () => {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -272,7 +297,7 @@ const CustomerShop = () => {
                 <option key={category} value={category}>{category}</option>
               ))}
             </select>
-            <select 
+            {/* <select 
               value={selectedSize} 
               onChange={(e) => setSelectedSize(e.target.value)}
               className="filter-select"
@@ -281,7 +306,7 @@ const CustomerShop = () => {
               {shopDetails?.sizes?.map(size => (
                 <option key={size} value={size}>{size}</option>
               ))}
-            </select>
+            </select> */}
           </div>
         </div>
       </header>
@@ -297,6 +322,15 @@ const CustomerShop = () => {
       </div>
 
       {showWishlistModal && <WishlistModal />}
+      {showImageModal && selectedImage && (
+        <ImageModal 
+          image={selectedImage} 
+          onClose={() => {
+            setShowImageModal(false);
+            setSelectedImage(null);
+          }} 
+        />
+      )}
     </div>
   );
 };
