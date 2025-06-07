@@ -265,6 +265,15 @@ const CustomerShop = () => {
     );
   };
 
+  const formatShopName = (name) => {
+    if (!name) return '';
+    return name
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -278,7 +287,7 @@ const CustomerShop = () => {
       <header className="shop-header fixed-header">
         <div className="shop-header-content">
           <div className="shop-header-top">
-            <h1>{shopDetails?.name}</h1>
+            <h1>{formatShopName(shopDetails?.name)}</h1>
             <button 
               className="wishlist-button"
               onClick={() => setShowWishlistModal(true)}
